@@ -1,5 +1,15 @@
-const HomepageBackgorund={uri:"https://images.unsplash.com/photo-1547573854-74d2a71d0826?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZCUyMHRhYmxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"}
+const HomepageBackgorund={uri:"https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg"}
+
+
+// splash and login
+
+ const SPLASH_SCREEN = require('../../../../assets/login/splash.png'); 
+const LOGIN={uri:"https://image.freepik.com/free-vector/ecofood-logo-template_1195-33.jpg"}
+
+
 
 export default{
-    HomepageBackgorund
+    HomepageBackgorund,
+    SPLASH_SCREEN,
+    LOGIN
 }

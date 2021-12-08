@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "224682362412",
+    "project_id": "accountmanagement-62830",
+    "storage_bucket": "accountmanagement-62830.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224682362412:android:6d7cbfc9d55de80ac2f389",
+        "android_client_info": {
+          "package_name": "com.simatask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224682362412-2ed8lj0fjc2lct3mt3b6gf7pnnk117lr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOqwfGRqtBhKPiGWmqKJY836FynJKyZnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224682362412-2ed8lj0fjc2lct3mt3b6gf7pnnk117lr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

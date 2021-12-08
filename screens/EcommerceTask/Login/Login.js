@@ -18,7 +18,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import * as ProductListActions from "../../../redux/action/ProductList";
 import * as AccountData from "../Constant/Data/AccountData";
 
-import Button  from '../../../constant/components/Buttons/Buttons'
+import Button  from '../../../constant/components/Buttons/Buttons';
+
 
 
 

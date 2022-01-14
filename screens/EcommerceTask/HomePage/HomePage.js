@@ -18,6 +18,9 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
+import {APP_URL} from '../../../api/api';
+import axios from 'axios';
+
 
 
 
@@ -31,8 +34,28 @@ class HomePage extends Component {
       FoodList: [],
     };
   }
-  componentDidMount() {
-    this.props.dispatch(ProductListActions.getProductList(AccountData.DATA));
+  componentDidMount =async()=> {
+    const tokenvalue = AsyncStorage.getItem('token');
+
+    alert(tokenvalue);
+    // axios({
+    //   method: 'POST',
+    //   url: `${APP_URL}/homelist`,
+    //   data: {
+
+    //   },
+    // })
+    //   .then(res => {
+        
+    //    alert("Register Successfully" + JSON.stringify(res));
+    //    this.setState({
+    //        name:'',email:'',password:'',tabActiveId:1
+    //    })
+    //   })
+    //   .catch(err => {
+    //     alert("err"+ JSON.stringify(err));
+    //     console.log('error in request', err);
+    //   });
   }
   HandleNavigation = () => {
     this.props.navigation.navigate("CartPage");
@@ -53,26 +76,8 @@ class HomePage extends Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.MainContainer}>
+          <Text>Welcome</Text>
 
-          <MapView
-            style={styles.mapStyle}
-            showsUserLocation={true}
-            zoomEnabled={true}
-            zoomControlEnabled={true}
-            initialRegion={{
-              latitude: 13.018264,
-              longitude: 80.108939,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}>
-             
-
-            <Marker
-              coordinate={{ latitude: 13.0203877, longitude: 80.0976355 }}
-              title={"JavaTpoint"}
-              description={"Java Training Institute"}
-            />
-          </MapView>
 
 
 
@@ -84,22 +89,13 @@ class HomePage extends Component {
 }
 
 const styles = StyleSheet.create({
-  MainContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  mapStyle: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
+  MainContainer:
+  {
+    flex:1,
+    backgroundColor:"white",
+    justifyContent:'center',
+    alignItems:'center'
+  }
 
   // Footer_wrap
 });

@@ -14,19 +14,18 @@ import Images from '../Constant/Images/Images';
 import Colors from '../Constant/Colors/Colors';
 import FontFamily from '../Constant/FontFamily/FontFamily';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import * as ProductListActions from '../../../redux/action/ProductList';
-import * as AccountData from '../Constant/Data/AccountData';
-
 import Button from '../../../constant/components/Buttons/Buttons';
 import axios from 'axios';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {APP_URL} from '../../../api/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabActiveId: 2,
+      tabActiveId: 1,
       loginEmailValue: '',
       loginPassword: '',
       showPassword: true,
@@ -36,57 +35,74 @@ class Login extends Component {
       password: '',
     };
   }
-  componentDidMount = () => {
-    // axios.get('http://192.168.42.242:8002/')
-    //   .then(response => alert(JSON.stringify(response)));
-    // axios({
-    //     method: "GET",
-    //     url: "http://192.168.42.242:8002",
-    //   })
-    //   .then(res => {
-    //     alert(JSON.stringify(res))
-    //   })
-    //   .catch(err => {
-    //     console.log("error in request", err);
-    //   });
-  };
+
   handleChangeTab = id => {
     this.setState({tabActiveId: id});
+
   };
-  handleInputChange = value => {
-    this.setState({loginEmailValue: value});
-  };
-  handleInputChange1 = value => {
-    this.setState({loginPassword: value});
-  };
+
   handleShowPassword = () => {
     this.setState({showPassword: !this.state.showPassword});
   };
   handleToLogin = () => {
-    const {name, email, password} = this.state;
-    this.handleToRegisterUser(name,email,password)
-   
+    const {loginEmailValue,loginPassword}=this.state;
+    this.Login(loginEmailValue,loginPassword);
   };
 
+  handletoRegister=()=>{
+    const {name, email, password} = this.state;
+    this.handleToRegisterUser(name,email,password)
+  }
+
   handleToRegisterUser=(name,email,password)=>{
+  
     axios({
         method: 'POST',
-        url: 'http://192.168.42.242:8002/newregister',
+        url: `${APP_URL}/register/newregister`,
         data: {
-          Name: name,
-          Email:email,
-          Password:password
+          name: name,
+          email:email,
+          password:password
         },
       })
         .then(res => {
-         alert("Register Successfully");
+          
+         alert("Register Successfully" + JSON.stringify(res));
          this.setState({
-             name:'',email:'',Password:'',tabActiveId:1
+             name:'',email:'',password:'',tabActiveId:1
          })
         })
         .catch(err => {
+          alert("err"+ JSON.stringify(err));
           console.log('error in request', err);
         });
+  }
+
+  Login=async(loginEmailValue,loginPassword)=>{
+
+
+   
+    axios({
+      method: 'POST',
+      url: `${APP_URL}/login`,
+      data: {
+        email:loginEmailValue,
+        password:loginPassword
+      },
+    })
+      .then(res => {
+        const {token}=res.data;
+       let a=  AsyncStorage.setItem('token', token)
+        if(token)
+        {
+          this.props.navigation.navigate("HomePage");
+        } 
+      })
+      .catch((err) => {
+      alert('error in request', JSON.stringify(err));
+        console.log('error in request', err);
+      });
+
   }
 
   // handlechanage
@@ -128,7 +144,9 @@ class Login extends Component {
                 <Ionicons name="person" size={20} color={Colors.darkblue} />
                 <TextInput
                   style={styles.loginInput}
-                  onChangeText={this.handleInputChange}
+                  onChangeText={value => {
+                    this.handleChangeValues(value, 'loginEmailValue');
+                  }}
                   value={this.state.loginEmailValue}
                   placeholder="Your Email"
                   placeholderTextColor="#929193"
@@ -143,7 +161,9 @@ class Login extends Component {
                 />
                 <TextInput
                   style={styles.loginInput}
-                  onChangeText={this.handleInputChange1}
+                  onChangeText={value => {
+                    this.handleChangeValues(value, 'loginPassword');
+                  }}
                   value={this.state.loginPassword}
                   placeholder="Your Password"
                   placeholderTextColor="#929193"
@@ -157,13 +177,13 @@ class Login extends Component {
                 />
               </View>
               <View>
-                <TouchableOpacity onPress={this.handleToLogin}>
+                <TouchableOpacity >
                   <Text style={styles.loginForgotText}>Forgot Password</Text>
                 </TouchableOpacity>
               </View>
 
               <View style={styles.loginButtonPaddingTop}>
-                <Button title="Login d" handleToLogin={this.handleToLogin} />
+                <Button title="Login" handleToLogin={this.handleToLogin} />
               </View>
 
               <View>
@@ -220,7 +240,7 @@ class Login extends Component {
                   onChangeText={value => {
                     this.handleChangeValues(value, 'password');
                   }}
-                  value={this.state.Password}
+                  value={this.state.password}
                   placeholder="Your password"
                   placeholderTextColor="#929193"
                   secureTextEntry={this.state.showPassword}
@@ -234,7 +254,7 @@ class Login extends Component {
               </View>
               
               <View style={styles.loginButtonPaddingTop}>
-                <Button title="Sign" handleToLogin={this.handleToLogin} />
+                <Button title="Sign" handleToLogin={this.handletoRegister} />
               </View>
             </View>
             </KeyboardAwareScrollView>
@@ -275,7 +295,8 @@ const styles = StyleSheet.create({
   },
 
   loginTitle: {
-    fontFamily: FontFamily.RalewayBold,
+    fontFamily: 'Raleway-Black',
+    fontWeight:'bold',
     fontSize: 16,
     textAlign: 'center',
     textTransform: 'uppercase',

@@ -25,6 +25,10 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
+	 <dict>
+      <key>NSAllowsArbitraryLoads</key>
+     <true/>
+ </dict>
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -36,7 +40,6 @@
       <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
       <true/>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<key>NSAllowsArbitraryLoads</key>
 				<true/>
 			</dict>
 		</dict>

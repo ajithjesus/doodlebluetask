@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import HomePage from './screens/EcommerceTask/HomePage/HomePage';
-import Login from './screens/EcommerceTask/Login/Login';
+import HomePage from './screens/HomePage';
+import Login from './screens/Login';
 
 import {LogBox} from 'react-native';
 const Stack = createStackNavigator();

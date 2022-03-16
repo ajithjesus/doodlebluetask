@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const APP_URL = 'http://192.168.42.192:8002';
+export const APP_URL = 'http://192.168.42.95:8002';
 
 export  const LoginFunction = async(loginEmailValue,loginPassword) => {
   return axios({

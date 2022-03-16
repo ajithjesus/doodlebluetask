@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   SafeAreaView,
-  Image
+  Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 
@@ -16,10 +16,9 @@ import FontFamily from '../Constant/FontFamily/FontFamily';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Button from '../../../constant/components/Buttons/Buttons';
 import axios from 'axios';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {APP_URL} from '../../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 class Login extends Component {
   constructor(props) {
@@ -29,7 +28,6 @@ class Login extends Component {
       loginEmailValue: '',
       loginPassword: '',
       showPassword: true,
-
       name: '',
       email: '',
       password: '',
@@ -38,72 +36,67 @@ class Login extends Component {
 
   handleChangeTab = id => {
     this.setState({tabActiveId: id});
-
   };
 
   handleShowPassword = () => {
     this.setState({showPassword: !this.state.showPassword});
   };
   handleToLogin = () => {
-    const {loginEmailValue,loginPassword}=this.state;
-    this.Login(loginEmailValue,loginPassword);
+    this.props.navigation.navigate('HomePage');
   };
 
-  handletoRegister=()=>{
+  handletoRegister = () => {
     const {name, email, password} = this.state;
-    this.handleToRegisterUser(name,email,password)
-  }
+    this.handleToRegisterUser(name, email, password);
+  };
 
-  handleToRegisterUser=(name,email,password)=>{
-  
-    axios({
-        method: 'POST',
-        url: `${APP_URL}/register/newregister`,
-        data: {
-          name: name,
-          email:email,
-          password:password
-        },
-      })
-        .then(res => {
-          
-         alert("Register Successfully" + JSON.stringify(res));
-         this.setState({
-             name:'',email:'',password:'',tabActiveId:1
-         })
-        })
-        .catch(err => {
-          alert("err"+ JSON.stringify(err));
-          console.log('error in request', err);
-        });
-  }
-
-  Login=async(loginEmailValue,loginPassword)=>{
-
-
-   
+  handleToRegisterUser = (name, email, password) => {
     axios({
       method: 'POST',
-      url: `${APP_URL}/login`,
+      url: `${APP_URL}/register/newregister`,
       data: {
-        email:loginEmailValue,
-        password:loginPassword
+        name: name,
+        email: email,
+        password: password,
       },
     })
       .then(res => {
-        const {token}=res.data;
-       let a=  AsyncStorage.setItem('token', token)
-        if(token)
-        {
-          this.props.navigation.navigate("HomePage");
-        } 
+        this.setState({
+          name: '',
+          email: '',
+          password: '',
+          tabActiveId: 1,
+        });
       })
-      .catch((err) => {
-      alert('error in request', JSON.stringify(err));
+      .catch(err => {
         console.log('error in request', err);
       });
+  };
 
-  }
+  Login = async (loginEmailValue, loginPassword) => {
+    try {
+      axios({
+        method: 'POST',
+        url: `${APP_URL}/login`,
+        data: {
+          email: loginEmailValue,
+          password: loginPassword,
+        },
+      })
+        .then(res => {
+          const {token} = res.data;
+          let a = AsyncStorage.setItem('token', token);
+          if (token) {
+            this.props.navigation.navigate('HomePage');
+          }
+        })
+        .catch(err => {
+          console.log('error in request', err);
+        });
+    } catch {
+      console.log('login err called');
+    }
+  };
 
   // handlechanage
 
@@ -124,21 +117,17 @@ class Login extends Component {
               <TouchableOpacity onPress={() => this.handleChangeTab(1)}>
                 <Text style={styles.loginTitle}>Login</Text>
               </TouchableOpacity>
-              {tabActiveId === 1 && (
-                <Text style={styles.loginTitleBorder}></Text>
-              )}
+              {tabActiveId === 1 && <Text style={styles.loginTitleBorder} />}
             </View>
 
             <View style={styles.loginTabWidth}>
               <TouchableOpacity onPress={() => this.handleChangeTab(2)}>
                 <Text style={styles.loginTitle}>SIGNUP</Text>
               </TouchableOpacity>
-              {tabActiveId === 2 && (
-                <Text style={styles.loginTitleBorder}></Text>
-              )}
+              {tabActiveId === 2 && <Text style={styles.loginTitleBorder} />}
             </View>
           </View>
-          {tabActiveId == 1 ? (
+          {tabActiveId === 1 ? (
             <View style={styles.loginInputWrap}>
               <View style={styles.loginInputContainer}>
                 <Ionicons name="person" size={20} color={Colors.darkblue} />
@@ -177,7 +166,7 @@ class Login extends Component {
                 />
               </View>
               <View>
-                <TouchableOpacity >
+                <TouchableOpacity>
                   <Text style={styles.loginForgotText}>Forgot Password</Text>
                 </TouchableOpacity>
               </View>
@@ -198,65 +187,65 @@ class Login extends Component {
               </View>
             </View>
           ) : (
-              <KeyboardAwareScrollView>
-            <View style={styles.loginInputWrap}>
-              <View style={styles.loginInputContainer}>
-                <Ionicons
-                  name="lock-closed"
-                  size={20}
-                  color={Colors.darkblue}
-                />
-                <TextInput
-                  style={styles.loginInput}
-                  onChangeText={value => {
-                    this.handleChangeValues(value, 'name');
-                  }}
-                  value={this.state.name}
-                  placeholder="Your UserName"
-                  placeholderTextColor="#929193"
-                />
-              </View>
-              <View style={styles.loginInputContainer}>
-                <Ionicons name="person" size={20} color={Colors.darkblue} />
-                <TextInput
-                  style={styles.loginInput}
-                  onChangeText={value => {
-                    this.handleChangeValues(value, 'email');
-                  }}
-                  value={this.state.email}
-                  placeholder="Your Email"
-                  placeholderTextColor="#929193"
-                />
-              </View>
+            <KeyboardAwareScrollView>
+              <View style={styles.loginInputWrap}>
+                <View style={styles.loginInputContainer}>
+                  <Ionicons
+                    name="lock-closed"
+                    size={20}
+                    color={Colors.darkblue}
+                  />
+                  <TextInput
+                    style={styles.loginInput}
+                    onChangeText={value => {
+                      this.handleChangeValues(value, 'name');
+                    }}
+                    value={this.state.name}
+                    placeholder="Your UserName"
+                    placeholderTextColor="#929193"
+                  />
+                </View>
+                <View style={styles.loginInputContainer}>
+                  <Ionicons name="person" size={20} color={Colors.darkblue} />
+                  <TextInput
+                    style={styles.loginInput}
+                    onChangeText={value => {
+                      this.handleChangeValues(value, 'email');
+                    }}
+                    value={this.state.email}
+                    placeholder="Your Email"
+                    placeholderTextColor="#929193"
+                  />
+                </View>
 
-              <View style={styles.loginInputContainer}>
-                <Ionicons
-                  name="lock-closed"
-                  size={20}
-                  color={Colors.darkblue}
-                />
-                <TextInput
-                  style={styles.loginInput}
-                  onChangeText={value => {
-                    this.handleChangeValues(value, 'password');
-                  }}
-                  value={this.state.password}
-                  placeholder="Your password"
-                  placeholderTextColor="#929193"
-                  secureTextEntry={this.state.showPassword}
-                />
-                <Ionicons
-                  onPress={this.handleShowPassword}
-                  name={this.state.showPassword ? 'eye-off' : 'eye'}
-                  size={20}
-                  color={Colors.darkblue}
-                />
+                <View style={styles.loginInputContainer}>
+                  <Ionicons
+                    name="lock-closed"
+                    size={20}
+                    color={Colors.darkblue}
+                  />
+                  <TextInput
+                    style={styles.loginInput}
+                    onChangeText={value => {
+                      this.handleChangeValues(value, 'password');
+                    }}
+                    value={this.state.password}
+                    placeholder="Your password"
+                    placeholderTextColor="#929193"
+                    secureTextEntry={this.state.showPassword}
+                  />
+                  <Ionicons
+                    onPress={this.handleShowPassword}
+                    name={this.state.showPassword ? 'eye-off' : 'eye'}
+                    size={20}
+                    color={Colors.darkblue}
+                  />
+                </View>
+
+                <View style={styles.loginButtonPaddingTop}>
+                  <Button title="Sign" handleToLogin={this.handletoRegister} />
+                </View>
               </View>
-              
-              <View style={styles.loginButtonPaddingTop}>
-                <Button title="Sign" handleToLogin={this.handletoRegister} />
-              </View>
-            </View>
             </KeyboardAwareScrollView>
           )}
         </View>
@@ -296,7 +285,7 @@ const styles = StyleSheet.create({
 
   loginTitle: {
     fontFamily: 'Raleway-Black',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     fontSize: 16,
     textAlign: 'center',
     textTransform: 'uppercase',

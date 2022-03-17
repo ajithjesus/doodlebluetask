@@ -18,8 +18,8 @@ class HomePage extends Component {
   render() {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <View style={styles.mainContainer}>
-          <Text>Welcome</Text>
+        <View>
+          <Text>Emi Calculator</Text>
         </View>
       </SafeAreaView>
     );

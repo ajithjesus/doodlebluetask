@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "224682362412",
-    "project_id": "accountmanagement-62830",
-    "storage_bucket": "accountmanagement-62830.appspot.com"
+    "project_number": "218078721194",
+    "project_id": "fir-push-3b557",
+    "storage_bucket": "fir-push-3b557.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:224682362412:android:6d7cbfc9d55de80ac2f389",
+        "mobilesdk_app_id": "1:218078721194:android:4109671f469753ce36ccd3",
         "android_client_info": {
           "package_name": "com.simatask"
         }
       },
       "oauth_client": [
         {
-          "client_id": "224682362412-2ed8lj0fjc2lct3mt3b6gf7pnnk117lr.apps.googleusercontent.com",
+          "client_id": "218078721194-eu1tsstk5ru1hv820l3dtrg3p5dc4ea8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBOqwfGRqtBhKPiGWmqKJY836FynJKyZnk"
+          "current_key": "AIzaSyDFCAjlLB_2kabJ_dnKDV8KDBcc4dFO76o"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "224682362412-2ed8lj0fjc2lct3mt3b6gf7pnnk117lr.apps.googleusercontent.com",
+              "client_id": "218078721194-eu1tsstk5ru1hv820l3dtrg3p5dc4ea8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

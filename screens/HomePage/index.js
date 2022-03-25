@@ -7,19 +7,24 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      FoodList: [],
+      data: [],
     };
   }
-  componentDidMount = async () => {};
-  HandleNavigation = () => {
-    this.props.navigation.navigate('CartPage');
+  componentDidMount = async () => {
+    fetch('https://type.fit/api/quotes')
+      .then(response => response.json())
+      .then(list => {
+        this.setState({data: list});
+      });
   };
 
   render() {
     return (
       <SafeAreaView style={styles.mainContainer}>
         <View>
-          <Text>Emi Calculator</Text>
+          {this.state.data?.map((item, id) => {
+            return <Text key={id}>{item.author}</Text>;
+          })}
         </View>
       </SafeAreaView>
     );

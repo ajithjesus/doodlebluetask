@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
-import {View, Image, Text, SafeAreaView, FlatList} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {SafeAreaView, FlatList, View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import styles from './styles';
 import Header from '../../constant/components/Header';
 import SearchInput from '../../constant/components/SearchInput';
 import SubHeading from '../../constant/components/SubHeading';
-import CardContainer from '../../constant/components/Card';
-import Images from '../../constant/Images/Images';
 import {QUOTES} from '../../constant/Data/AccountData';
+import EmptyRecord from '../../constant/components/EmptyRecord';
+import {FilterSearchText} from '../../utitlites/helpersFunction';
+import CardList from './CardList';
+import PageLoader from '../../constant/components/PageLoader';
+import {STRINGS} from '../../utitlites/strings';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class HomePage extends Component {
   constructor(props) {
@@ -16,61 +19,77 @@ class HomePage extends Component {
     this.state = {
       quotesData: QUOTES,
       filterList: QUOTES,
+      loaderVisible: false,
+      categories: [
+        {
+          id: 1,
+          name: 'All',
+        },
+        {
+          id: 2,
+          name: 'Love',
+        },
+        {
+          id: 1,
+          name: 'Sad',
+        },
+      ],
+      categoriesHightlight: 'All',
     };
   }
 
-  // handleToRenderCard
-  handleToRenderCard = item => {
-    return (
-      <CardContainer>
-        <Ionicons name="heart" size={20} style={styles.cardHeartContianer} />
-        <View style={styles.cardMainContainer}>
-          <Image
-            style={styles.cardImgContainer}
-            source={Images.LeaderImage}
-            resizeMode={'cover'}
-          />
-          <Text style={styles.cartTitle}>{item.text}</Text>
-        </View>
-        <View style={styles.cardAuthContainer}>
-          <Text style={styles.cardAuthor}>{item.author}</Text>
-        </View>
-      </CardContainer>
-    );
-  };
-
   // handleToSearchHandler
-
   handleToSearchHandler = searchText => {
+    const {quotesData} = this.state;
     if (searchText) {
-      const newData = this.state.quotesData.filter(item => {
-        const itemData = item.author
-          ? item.author.toUpperCase()
-          : ''.toUpperCase();
-        const textData = searchText.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      this.setState({filterList: newData});
+      let SearchResult = FilterSearchText(quotesData, searchText);
+      this.setState({filterList: SearchResult});
     }
   };
 
+  // handleToFilterCategories
+
+  handleFilterCat = val => this.setState({categoriesHightlight: val});
+
   render() {
+    const {loaderVisible, filterList, categories, categoriesHightlight} =
+      this.state;
     return (
-      <SafeAreaView style={styles.mainContainer}>
+      <SafeAreaView style={styles.homeContainer}>
+        <PageLoader visible={loaderVisible} />
         <Header />
         <SearchInput onChangeText={val => this.handleToSearchHandler(val)} />
-        <SubHeading title="Categories" />
+        <SubHeading title={STRINGS.Categories} />
+
+        <View style={styles.categoriesContainer}>
+          <FlatList
+            contentContainerStyle={styles.flatlistContainer}
+            keyExtractor={(item, index) => 'key' + index}
+            data={categories}
+            horizontal
+            renderItem={({item}) => (
+              <TouchableOpacity onPress={() => this.handleFilterCat(item.name)}>
+                <Text
+                  style={
+                    item?.name === categoriesHightlight
+                      ? [
+                          styles.categoriesTitle,
+                          styles.categoriesTitleHighlight,
+                        ]
+                      : styles.categoriesTitle
+                  }>
+                  {item?.name}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
         <FlatList
-          contentContainerStyle={{flexGrow: 1}}
+          contentContainerStyle={styles.flatlistContainer}
           keyExtractor={(item, index) => 'key' + index}
-          data={this.state.filterList}
-          renderItem={({item}) => this.handleToRenderCard(item)}
-          ListEmptyComponent={
-            <View
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text>Empty Data</Text>
-            </View>
-          }
+          data={filterList}
+          renderItem={({item, index}) => <CardList item={item} />}
+          ListEmptyComponent={<EmptyRecord />}
         />
       </SafeAreaView>
     );

@@ -9,7 +9,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   headerTitle: {
-    fontFamily: 'Raleway-Black',
+    fontFamily: fontFamily.RalewayMedium,
     fontWeight: 'bold',
     fontSize: 16,
     color: color.darkblue,

@@ -1,40 +1,32 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../constant/Colors/Colors';
-import fontFamily from '../../constant/FontFamily/FontFamily';
+import {WidthDimension} from '../../utitlites/dimension';
 export default StyleSheet.create({
-  mainContainer: {
+  homeContainer: {
     flex: 1,
     backgroundColor: colors.white,
     padding: 10,
   },
-
-  cardMainContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+  categoriesContainer: {
+    marginVertical: 5,
   },
-  cardHeartContianer: {
-    textAlign: 'right',
+  categoriesTitle: {
+    padding: 4,
+    borderColor: colors.black,
+    borderWidth: 1,
+    marginRight: 10,
+    textAlign: 'center',
+    width: WidthDimension(0.14),
+    height: 30,
+    borderRadius: 10,
+    color: colors.black,
   },
-  cardImgContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 40,
+  categoriesTitleHighlight: {
+    backgroundColor: colors.darkGreen,
+    color: colors.white,
+    borderColor: colors.darkGreen,
   },
-  cartTitle: {
-    fontFamily: fontFamily.RalewayBold,
-    fontWeight: 'bold',
-    fontSize: 14,
-    color: colors.darkblue,
-    paddingLeft: 10,
-  },
-  cardAuthContainer: {
-    display: 'flex',
-    alignItems: 'flex-end',
-  },
-  cardAuthor: {
-    fontFamily: fontFamily.RalewayMedium,
-    fontSize: 12,
-    color: colors.darkblue,
+  flatlistContainer: {
+    flexGrow: 1,
   },
 });
